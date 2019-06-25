@@ -10,11 +10,16 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "echarts": "^4.1.0",
+    "iview": "^3.3.0-rc.1",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "swiper": "^4.4.1",
+    "qs": "^6.6.0",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "ylcookie": "^2.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
