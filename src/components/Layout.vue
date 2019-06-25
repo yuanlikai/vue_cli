@@ -50,49 +50,10 @@
           <Menu v-if="menu" :active-name="activeName" theme="light" width="auto"
                 :open-names="activeName.split('-').splice(0,1)"
                 @on-select="Menu">
-            <Submenu v-for="item in menuList" :key="item.numb" :name="item.numb">
-              <template slot="title">
-                <Icon type="ios-analytics"/>
-                {{item.name}}
-              </template>
-              <MenuItem v-for="itemChil in item.children" :key="itemChil.numb" :name="itemChil.numb" :to="itemChil.to">
-                {{itemChil.name}}
-              </MenuItem>
-            </Submenu>
-            <!--<Submenu name="1">-->
-            <!--<template slot="title">-->
-            <!--<Icon type="ios-analytics"/>-->
-            <!--商品管理-->
-            <!--</template>-->
-            <!--<MenuItem name="1-1" to="product">商品列表</MenuItem>-->
-            <!--<MenuItem name="1-2" to="addProduct">添加商品</MenuItem>-->
-            <!--<MenuItem name="1-3" to="productClass">分类管理</MenuItem>-->
-            <!--</Submenu>-->
-            <!--<Submenu name="2">-->
-            <!--<template slot="title">-->
-            <!--<Icon type="ios-analytics"/>-->
-            <!--订单管理-->
-            <!--</template>-->
-            <!--<MenuItem name="2-1" to="orderList">订单列表</MenuItem>-->
-            <!--<MenuItem name="2-2" to="returnOrder">退单列表</MenuItem>-->
-            <!--</Submenu>-->
-            <!--<Submenu name="3">-->
-            <!--<template slot="title">-->
-            <!--<Icon type="ios-analytics"/>-->
-            <!--供应商管理-->
-            <!--</template>-->
-            <!--<MenuItem name="3-1" to="supplierList">供应商列表</MenuItem>-->
-            <!--<MenuItem name="3-2" to="addSupplier">添加供应商</MenuItem>-->
-            <!--</Submenu>-->
-            <!--<Submenu name="4">-->
-            <!--<template slot="title">-->
-            <!--<Icon type="ios-analytics"/>-->
-            <!--系统管理-->
-            <!--</template>-->
-            <!--<MenuItem name="4-1" to="userList">用户管理</MenuItem>-->
-            <!--<MenuItem name="4-2" to="roleList">角色管理</MenuItem>-->
-            <!--<MenuItem name="4-3" to="menuList">菜单管理</MenuItem>-->
-            <!--</Submenu>-->
+            <MenuItem name="1-1">
+              <Icon type="ios-analytics"></Icon>
+              <span>订单管理</span>
+            </MenuItem>
           </Menu>
         </Sider>
         <Layout :style="{padding: '0 24px 24px'}">
