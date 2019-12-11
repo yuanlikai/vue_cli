@@ -54,39 +54,25 @@
         _this.loading = true;
         _this.$refs[name].validate((valid) => {
           if (valid) {
-            _this.Axios.post('/form/login', _this.Qs.stringify({
-              username: _this.formInline.account,
-              password: _this.formInline.password,
-            })).then(res => {
-              if (res.data.code === 0) {
-                _this.$Message.success('登录成功!');
-                sessionStorage.setItem('Menu', '1-1');
-                console.log(window.sessionStorage.getItem('Menu'))
-                localStorage.setItem('user', _this.formInline.account);
-                _this.$router.push({
-                  name: 'product',
-                });
-                _this.Axios.get('/Manage/UserInfo/getCurrentUser').then(res => {
 
-                  localStorage.setItem('status', res.data.data.userType);
-                });
-
-              } else {
-                _this.$Message.error(res.data.message);
-              }
-              _this.loading = false;
-            }).catch(err => {
-              _this.$Message.error('系统错误');
-              _this.loading = false;
-            })
+            _this.$router.push({
+              name: 'product',
+            });
           } else {
             _this.loading = false;
             _this.$Message.error('账号密码不能为空!');
           }
         })
+      },
+      getMayi(){
+        const _this = this;
+        _this.Axios.get('/search/扫毒2-first-asc-1').then(res=>{
+          console.log(res)
+        })
       }
     },
     mounted() {
+      this.getMayi()
     }
   }
 </script>

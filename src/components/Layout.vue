@@ -1,107 +1,108 @@
 <style scoped>
-  .layout {
+  .layout{
     border: 1px solid #d7dde4;
     background: #f5f7f9;
     position: relative;
     border-radius: 4px;
     overflow: hidden;
   }
-
-  .layout-logo {
-    width: 100px;
-    height: 30px;
+  .layout-header-bar{
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,.1);
+  }
+  .layout-logo-left{
+    width: 90%;
+    height: 40px;
     background: #5b6270;
     border-radius: 3px;
-    float: left;
-    position: relative;
-    top: 15px;
-    left: 20px;
+    margin: 15px auto;
   }
-
-  .layout-nav {
-    width: 420px;
-    margin: 0 auto;
-    margin-right: 20px;
+  .menu-icon{
   }
-
-  .ivu-icon {
-    line-height: 1.5;
+  .rotate-icon{
+    transform: rotate(-90deg);
+  }
+  .menu-item span{
+    display: inline-block;
+    overflow: hidden;
+    width: 69px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+    transition: width .2s ease .2s;
+  }
+  .menu-item i{
+    transform: translateX(0px);
+    transition: font-size .2s ease, transform .2s ease;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  .collapsed-menu span{
+    width: 0px;
+    transition: width .2s ease;
+  }
+  .collapsed-menu i{
+    transform: translateX(5px);
+    transition: font-size .2s ease .2s, transform .2s ease .2s;
+    vertical-align: middle;
+    font-size: 22px;
   }
 </style>
 <template>
   <div class="layout">
     <Layout>
-      <Header>
-        <Menu mode="horizontal" theme="dark" active-name="1" @on-select="returnUser">
-          <div class="layout-logo"></div>
-          <div class="layout-nav">
-            <Submenu name="1" style="float: right;">
-              <template slot="title">
-                <Icon type="logo-octocat"/>
-                {{user}}
-              </template>
-              <MenuItem name="1-1">退出</MenuItem>
-            </Submenu>
-          </div>
+      <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
+        <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">
+          <MenuItem name="1-1">
+            <Icon type="ios-navigate"></Icon>
+            <span>Option 1</span>
+          </MenuItem>
+          <MenuItem name="1-2">
+            <Icon type="ios-search"></Icon>
+            <span>Option 2</span>
+          </MenuItem>
+          <MenuItem name="1-3">
+            <Icon type="ios-settings"></Icon>
+            <span>Option 3</span>
+          </MenuItem>
         </Menu>
-      </Header>
+      </Sider>
       <Layout>
-        <Sider hide-trigger :style="{background: '#fff'}">
-          <Menu v-if="menu" :active-name="activeName" theme="light" width="auto"
-                :open-names="activeName.split('-').splice(0,1)"
-                @on-select="Menu">
-            <MenuItem name="1-1">
-              <Icon type="ios-analytics"></Icon>
-              <span>订单管理</span>
-            </MenuItem>
-          </Menu>
-        </Sider>
-        <Layout :style="{padding: '0 24px 24px'}">
-          <router-view></router-view>
-        </Layout>
+        <Header :style="{padding: 0}" class="layout-header-bar">
+          <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
+        </Header>
+        <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
+          Content
+        </Content>
       </Layout>
     </Layout>
   </div>
 </template>
 <script>
   export default {
-    data() {
+    data () {
       return {
-        menu: false,
-        menuList: [],
-        user: localStorage.getItem('user'),
-        activeName: !sessionStorage.getItem('Menu') ? '1' : sessionStorage.getItem('Menu')
+        isCollapsed: false
+      }
+    },
+    computed: {
+      rotateIcon () {
+        return [
+          'menu-icon',
+          this.isCollapsed ? 'rotate-icon' : ''
+        ];
+      },
+      menuitemClasses () {
+        return [
+          'menu-item',
+          this.isCollapsed ? 'collapsed-menu' : ''
+        ]
       }
     },
     methods: {
-      // 根据用户显示菜单
-      getMenu() {
-        const _this = this;
-        _this.Axios.get('/Manage/Menu/getUserMenu').then(res => {
-          if (res.data.code === 0) {
-            _this.menuList = res.data.data;
-            _this.menu = true;
-
-          } else {
-            _this.$Message.error(res.data.message)
-          }
-        })
-      },
-
-      // 退出
-      returnUser(i) {
-        this.Axios.post('/logout').then(res => {
-        });
-        this.$router.push('/');
-      },
-
-      // 已选中菜单防刷新
-      Menu(i) {
-        sessionStorage.setItem('Menu', i)
-      },
-    },
-    mounted() {
-      this.getMenu()
+      collapsedSider () {
+        this.$refs.side1.toggleCollapse();
+      }
     }
   }
 </script>

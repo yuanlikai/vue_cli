@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/': {
-        target: 'http://47.101.204.64:8087',
+        target: 'http://www.btakt.com',
         // target: 'http://192.168.1.73:8087',
         changeOrigin: true,
         pathRewrite: {
